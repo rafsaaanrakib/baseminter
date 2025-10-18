@@ -64,8 +64,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Plausible Analytics */}
-        <script async defer data-domain="baseminter.fun" src="https://plausible.io/js/plausible.js"></script>
+        {/* Google Analytics */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-1D0MTCLX5K"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-1D0MTCLX5K');
+            `,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
