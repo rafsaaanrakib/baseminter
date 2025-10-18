@@ -21,6 +21,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "baseminter.fun | No-Code ERC20 Token Creator on Base",
   description: "Mint, verify, and trade your own ERC20 token on Base instantly. No coding required. Premium, secure, and Base-branded.",
+  verification: {
+    google: "Pj3T7yR6E3oaLCzz8FWZu-x27YDKrUoGUGZTtAhxSWo",
+  },
   icons: {
     icon: "/favicon.ico",
   },
