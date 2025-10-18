@@ -1,0 +1,22 @@
+/*
+  motion-fade: fade-in animation for page transitions
+  Uses Tailwind and keyframes for smooth effect
+*/
+.motion-fade {
+  animation: fadeInMotion 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes fadeInMotion {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Button close transition for modal */
+.btn-modal-close {
+  transition: color 0.2s cubic-bezier(0.4,0,0.2,1);
+}
