@@ -51,19 +51,26 @@ export default function TokenForm() {
         } catch {}
       }
     } catch (error: any) {
+      // Log the full error for debugging
       console.error('Deployment error:', error);
-      
-      // Parse error message for common cases
-      const errorString = error?.message || error?.reason || error?.toString() || '';
-      
-      if (errorString.includes('insufficient funds') || errorString.includes('insufficient balance')) {
+      let errorString = '';
+      if (typeof error === 'string') errorString = error;
+      else if (error?.data?.message) errorString = error.data.message;
+      else if (error?.error?.message) errorString = error.error.message;
+      else if (error?.message) errorString = error.message;
+      else if (error?.reason) errorString = error.reason;
+      else errorString = JSON.stringify(error);
+
+      // Show the error string for debugging
+      // Match more variants for insufficient funds
+      if (/insufficient funds|insufficient balance|not enough funds|funds for gas|does not have enough ETH|not enough ETH|not enough balance/i.test(errorString)) {
         setErrorMsg('⚠️ Insufficient funds! Please deposit at least 0.0004 ETH to your wallet for gas fees.');
-      } else if (errorString.includes('user rejected') || errorString.includes('User denied')) {
+      } else if (/user rejected|User denied|user denied|user_cancelled|user cancelled/i.test(errorString)) {
         setErrorMsg('❌ Transaction cancelled by user.');
-      } else if (errorString.includes('network') || errorString.includes('connection')) {
+      } else if (/network|connection|rpc|provider/i.test(errorString)) {
         setErrorMsg('🌐 Network error. Please check your connection and try again.');
       } else {
-        setErrorMsg('❌ Token deployment failed. Please try again or contact support.');
+        setErrorMsg('❌ Token deployment failed. ' + (errorString ? `Details: ${errorString}` : 'Please try again or contact support.'));
       }
     }
   };
