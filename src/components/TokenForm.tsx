@@ -63,7 +63,7 @@ export default function TokenForm() {
 
       // Show the error string for debugging
       // Match more variants for insufficient funds
-      if (/insufficient funds|insufficient balance|not enough funds|funds for gas|does not have enough ETH|not enough ETH|not enough balance/i.test(errorString)) {
+      if (/insufficient funds|insufficient balance|not enough funds|funds for gas|does not have enough ETH|not enough ETH|not enough balance|missing revert data|CALL_EXCEPTION/i.test(errorString)) {
         setErrorMsg('⚠️ Insufficient funds! Please deposit at least 0.0004 ETH to your wallet for gas fees.');
       } else if (/user rejected|User denied|user denied|user_cancelled|user cancelled/i.test(errorString)) {
         setErrorMsg('❌ Transaction cancelled by user.');
