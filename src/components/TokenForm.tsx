@@ -50,8 +50,21 @@ export default function TokenForm() {
           window.dispatchEvent(new Event('deployedTokensUpdated'));
         } catch {}
       }
-    } catch (error) {
-      setErrorMsg('Token deployment failed.');
+    } catch (error: any) {
+      console.error('Deployment error:', error);
+      
+      // Parse error message for common cases
+      const errorString = error?.message || error?.reason || error?.toString() || '';
+      
+      if (errorString.includes('insufficient funds') || errorString.includes('insufficient balance')) {
+        setErrorMsg('⚠️ Insufficient funds! Please deposit at least 0.0004 ETH to your wallet for gas fees.');
+      } else if (errorString.includes('user rejected') || errorString.includes('User denied')) {
+        setErrorMsg('❌ Transaction cancelled by user.');
+      } else if (errorString.includes('network') || errorString.includes('connection')) {
+        setErrorMsg('🌐 Network error. Please check your connection and try again.');
+      } else {
+        setErrorMsg('❌ Token deployment failed. Please try again or contact support.');
+      }
     }
   };
 
